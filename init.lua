@@ -1,0 +1,6 @@
+require("editor")
+require("keybinds")
+require("packages")
+require("lsp")
+require("tele")
+require("colorscheme")
