@@ -66,17 +66,19 @@ keymap.set("t", "<ESC>", "<C-\\><C-n>")
 
 -- Diagnotistics
 keymap.set("n", "<C-j>", function()
-  vim.diagnostic.goto_next()
+    vim.diagnostic.jump({ count = 1, float = true })
 end, opts)
 
-keymap.set("n", "<leader>r", function()
-  require("config.hsl").replaceHexWithHSL()
-end)
+keymap.set("n", "<C-k>", function()
+    vim.diagnostic.jump({ count = -1, float = true })
+end, opts)
 
 keymap.set("n", "<leader>i", function()
-  require("config.lsp").toggleInlayHints()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end)
 
-keymap.set("n", "sf", ":Telescope file_browser<CR>")
+keymap.set("n", "sf", function()
+    require("telescope").extensions.file_browser.file_browser()
+end)
 
 vim.opt.clipboard = "unnamedplus"
