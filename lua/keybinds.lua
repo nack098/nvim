@@ -61,7 +61,7 @@ keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Terminal Mode
-keymap.set("n", "to", ":vsplit<Return><C-w>w:term<CR>i")
+keymap.set("n", "to", ":split<Return><C-w>w:term<CR>i")
 keymap.set("t", "<ESC>", "<C-\\><C-n>")
 
 -- Diagnotistics

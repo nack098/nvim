@@ -1,6 +1,6 @@
 require("mason").setup()
 local cmp = require("cmp")
-local select_opts = {behavior = cmp.SelectBehavior.Select}
+local select_opts = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
     expand = function(args)
         require("luasnip").lsp_expand(args.body)
@@ -21,26 +21,27 @@ cmp.setup({
     }
 })
 
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
-vim.lsp.enable({"lua_ls", "gdscript", "gdshader_lsp", "jdtls", "ts_ls", "clangd"})
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.lsp.enable({ "lua_ls", "ts_ls", "clangd", "asm_lsp", "rust_analyzer",
+    "texlab",
+    "csharp_ls", "pylsp" })
 
 vim.lsp.config('*', {
     capabilities = require("cmp_nvim_lsp").default_capabilities()
+})
+
+vim.lsp.config('lua_ls', {
+    settings = {
+        Lua = {
+            diagnostics = { globals = { "vim" } }
+        }
+    }
 })
 
 require("conform").setup({
     formatters_by_ft = {
         javascript = { "prettierd", "prettier" },
         typescript = { "prettierd", "prettier" },
-        css = { "prettierd", "prettier" },
-        scss = { "prettierd", "prettier" },
-        markdown = { "prettierd", "prettier" },
-        html = { "prettierd", "prettier" },
-        json = { "prettierd", "prettier" },
-        yaml = { "prettierd", "prettier" },
-        graphql = { "prettierd", "prettier" },
-        md = { "prettierd", "prettier" },
-        txt = { "prettierd", "prettier" }
     },
     format_on_save = { timeout_ms = 500, lsp_fallback = true },
 })
