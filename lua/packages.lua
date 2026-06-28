@@ -9,7 +9,6 @@ vim.pack.add({
     { src = "https://github.com/nvim-tree/nvim-web-devicons.git" },
     { src = "https://github.com/nvim-telescope/telescope-file-browser.nvim.git" },
     { src = "https://github.com/nvim-lualine/lualine.nvim.git" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
     { src = "https://github.com/L3MON4D3/LuaSnip.git" },
     { src = "https://github.com/mfussenegger/nvim-jdtls.git" },
     { src = "https://github.com/stevearc/conform.nvim.git" },
