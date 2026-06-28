@@ -38,13 +38,3 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
         set_language_config()
     end
 })
-
-vim.diagnostic.config({
-    virtual_text = {
-        prefix = '●'
-    },
-    severity_sort = true,
-    float = {
-        source = "always"
-    },
-})

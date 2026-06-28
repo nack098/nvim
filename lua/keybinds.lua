@@ -81,4 +81,6 @@ keymap.set("n", "sf", function()
     require("telescope").extensions.file_browser.file_browser()
 end)
 
+keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show Diagnostics Float" })
+
 vim.opt.clipboard = "unnamedplus"

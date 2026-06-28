@@ -48,6 +48,10 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim.git"
     },
+    "roslyn.nvim": {
+      "rev": "c4ef25973bcc30a2c8c8766711fbbdb3d02b70a3",
+      "src": "https://github.com/seblyng/roslyn.nvim.git"
+    },
     "telescope-file-browser.nvim": {
       "rev": "3610dc7",
       "src": "https://github.com/nvim-telescope/telescope-file-browser.nvim.git"
