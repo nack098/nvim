@@ -1,6 +1,5 @@
 require("mason").setup()
 local cmp = require("cmp")
-local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 local max_width = math.floor(vim.o.columns * 0.8)
 local max_height = math.floor(vim.o.lines * 0.3)
@@ -33,12 +32,21 @@ cmp.setup({
 })
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-vim.lsp.enable({ "lua_ls", "ts_ls", "clangd", "asm_lsp", "rust_analyzer",
-    "texlab",
-    "roslyn_ls", "pylsp", "elixirls", "tinymist", "tailwindcss"  })
 
 vim.lsp.config('*', {
     capabilities = require("cmp_nvim_lsp").default_capabilities()
+})
+
+local neocmake_caps = require("cmp_nvim_lsp").default_capabilities()
+neocmake_caps.textDocument.completion.completionItem.snippetSupport = true
+
+vim.lsp.config('neocmake', {
+    capabilities = neocmake_caps,
+    init_options = {
+        format = { enable = true },
+        lint = { enable = true },
+        scan_cmake_in_package = true,
+    }
 })
 
 vim.lsp.config('lua_ls', {
@@ -49,6 +57,10 @@ vim.lsp.config('lua_ls', {
     }
 })
 
+vim.lsp.enable({ "lua_ls", "ts_ls", "clangd", "asm_lsp", "rust_analyzer",
+    "texlab", "svelte", "kotlin_language_server",
+    "roslyn_ls", "pylsp", "elixirls", "tinymist", "tailwindcss", "neocmake", "jdtls", "slangd" })
+
 require("conform").setup({
     formatters_by_ft = {
         javascript = { "prettierd", "prettier" },
@@ -57,28 +69,31 @@ require("conform").setup({
     format_on_save = { timeout_ms = 500, lsp_fallback = true },
 })
 
--- FORCING WRAP IN HOVER
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = "rounded",
-    max_width = max_width,
-    max_height = max_height,
-    wrap = true,
-    wrap_at = max_width,
-  }
-)
+-- FORCING WRAP IN HOVER (Modern Nvim 0.11/0.12 way)
+local orig_hover = vim.lsp.buf.hover
+vim.lsp.buf.hover = function(opts)
+    opts = opts or {}
+    opts.border = opts.border or "rounded"
+    opts.max_width = opts.max_width or max_width
+    opts.max_height = opts.max_height or max_height
+    opts.wrap = opts.wrap ~= false
+    opts.wrap_at = opts.wrap_at or max_width
+    return orig_hover(opts)
+end
 
 -- FORCING WRAP IN SIGNATURE HELP
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help, {
-    border = "rounded",
-    max_width = max_width,
-    max_height = max_height,
-    wrap = true,
-    wrap_at = max_width,
-  }
-)
+local orig_signature_help = vim.lsp.buf.signature_help
+vim.lsp.buf.signature_help = function(opts)
+    opts = opts or {}
+    opts.border = opts.border or "rounded"
+    opts.max_width = opts.max_width or max_width
+    opts.max_height = opts.max_height or max_height
+    opts.wrap = opts.wrap ~= false
+    opts.wrap_at = opts.wrap_at or max_width
+    return orig_signature_help(opts)
+end
 
+-- Your diagnostic config is mostly fine, but let's make sure it's pristine
 vim.diagnostic.config({
     virtual_text = false, -- Goodbye bleeding text!
     severity_sort = true,
