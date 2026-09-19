@@ -57,9 +57,7 @@ vim.lsp.config('lua_ls', {
     }
 })
 
-vim.lsp.enable({ "lua_ls", "ts_ls", "clangd", "asm_lsp", "rust_analyzer",
-    "texlab", "svelte", "kotlin_language_server",
-    "roslyn_ls", "pylsp", "elixirls", "tinymist", "tailwindcss", "neocmake", "jdtls", "slangd" })
+vim.lsp.enable({ "lua_ls", "clangd", "neocmake" })
 
 require("conform").setup({
     formatters_by_ft = {
